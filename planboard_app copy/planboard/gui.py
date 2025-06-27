@@ -1,6 +1,6 @@
 import tkinter as tk
 from .dates_times import get_date_str_list, get_callender_week_str
-from .core import on_enter_change_mouse, open_creator_window, close_app, get_date_list
+from .core import on_enter_change_mouse, open_creator_window, close_app, get_date_list, clear_db_table
 import config
 
 class WhiteboardWindow:
@@ -12,6 +12,7 @@ class WhiteboardWindow:
 		# setting for dev-mode shortcut closing
 		if config.DEV_MODE:
 			self.root.bind("x", lambda e: close_app(e, "closed with dev shortcut <x>"))
+			self.root.bind("<c>", lambda e: clear_db_table(e))
 
 		# global list of date and frame tuple
 		self.date_frame_map = {}
@@ -92,27 +93,32 @@ class WhiteboardWindow:
 		# columns of the week tabel
 		monday_frame = tk.LabelFrame(frame,
 							   		 relief="solid", bd=1,
-									 bg=config.COLUMN_BG_COLOR)
+									 bg=config.COLUMN_BG_COLOR,
+									 padx=5, pady=2.5)
 		monday_frame.grid(row=2, column=0, sticky="nsew")
 		self.date_frame_map[get_date_list(week)[0]] = monday_frame
 		tuesday_frame = tk.LabelFrame(frame,
 									  relief="solid", bd=1,
-									  bg=config.COLUMN_BG_COLOR)
+									  bg=config.COLUMN_BG_COLOR,
+									  padx=5, pady=2.5)
 		tuesday_frame.grid(row=2, column=1, sticky="nsew")
 		self.date_frame_map[get_date_list(week)[1]] = tuesday_frame
 		wednesday_frame = tk.LabelFrame(frame,
 										relief="solid", bd=1,
-										bg=config.COLUMN_BG_COLOR)
+										bg=config.COLUMN_BG_COLOR,
+										padx=5, pady=2.5)
 		wednesday_frame.grid(row=2, column=2, sticky="nsew")
 		self.date_frame_map[get_date_list(week)[2]] = wednesday_frame
 		thursday_frame = tk.LabelFrame(frame,
 								 	   relief="solid", bd=1,
-									   bg=config.COLUMN_BG_COLOR)
+									   bg=config.COLUMN_BG_COLOR,
+									   padx=5, pady=2.5)
 		thursday_frame.grid(row=2, column=3, sticky="nsew")
 		self.date_frame_map[get_date_list(week)[3]] = thursday_frame
 		friday_frame = tk.LabelFrame(frame,
 							   		 relief="solid", bd=1,
-									 bg=config.COLUMN_BG_COLOR)
+									 bg=config.COLUMN_BG_COLOR,
+									 padx=5, pady=2.5)
 		friday_frame.grid(row=2, column=4, sticky="nsew")
 		self.date_frame_map[get_date_list(week)[4]] = friday_frame
 

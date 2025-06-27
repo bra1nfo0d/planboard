@@ -47,3 +47,7 @@ def store_user_input(data):
 def create_db_table():
 	from .storage import create_db_table
 	create_db_table()
+
+def clear_db_table(event):
+	from .storage import clear_user_input
+	clear_user_input()

@@ -8,7 +8,8 @@ class CreateInput:
 		self.config = config
 
 		self.input_frame = tk.Frame(self.master_frame, relief="solid", bd=1)
-		self.input_frame.pack()
+		self.input_frame.pack(fill="both", pady=2.5)
+
 	
 	def build_input(self):
 		for i in range(len(self.text_memory)):
@@ -16,7 +17,7 @@ class CreateInput:
 
 	def create_section(self, i):
 		frame = tk.Frame(self.input_frame, relief="solid", bd=1)
-		frame.pack()
+		frame.pack(fill="x")
 		for j in range(len(self.text_memory[i])):
 			if j == 0:
 				label = tk.Label(frame, 
