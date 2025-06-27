@@ -2,9 +2,10 @@ import tkinter as tk
 import config
 
 class CreateInput:
-	def __init__(self, date, text_memory, date_frame_map):
+	def __init__(self, date, text_memory, date_frame_map, config):
 		self.master_frame = date_frame_map[date]
 		self.text_memory = text_memory
+		self.config = config
 
 		self.input_frame = tk.Frame(self.master_frame, relief="solid", bd=1)
 		self.input_frame.pack()

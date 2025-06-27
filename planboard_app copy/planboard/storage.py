@@ -1,56 +1,55 @@
 import sqlite3
-import json
 import os
-import config
+import json
+from .core import create_user_input
 
-def store_input_data(data):
+def create_db_table():
 	try:
-		# creates db file in the current directory of the programm
 		db_path = os.path.join(os.path.dirname(__file__), "storage.db")
 		connection = sqlite3.connect(db_path)
 		cursor = connection.cursor()
 
-		# creates db structur if not already created
 		cursor.execute("""
-			CREATE TABLE IF NOT EXISTS input_data (
-			id INTEGER PRIMARY KEY AUTOINCREMENT,
-			data TEXT NOT NULL
-			)
-			""")
-
-		# inputs data into db
-		cursor.execute("INSERT INTO input_data (data) VALUES (?)", (json.dumps(data),))
+					   CREATE TABLE IF NOT EXISTS user_inputs (
+					   id INTEGER PRIMARY KEY AUTOINCREMENT,
+				 	   date TEXT NOT NULL,
+					   config TEXT,
+					   text TEXT)
+					   """)
 		connection.commit()
-
-		load_input_data()
-
 		connection.close()
 
 	except Exception as ex:
 		print(ex)
 
-def load_input_data():
-	from .create_input import CreateInput
-	# creates db file in the current directory of the programm
+def store_user_input(data):
 	db_path = os.path.join(os.path.dirname(__file__), "storage.db")
 	connection = sqlite3.connect(db_path)
 	cursor = connection.cursor()
 
-	cursor.execute("SELECT data FROM input_data")
+	cursor.execute("""
+				   INSERT OR REPLACE INTO user_inputs (date, config, text)
+				   VALUES (?, ?, ?)
+				   """, (
+					   data["date"],
+					   json.dumps(data["config"]),
+					   json.dumbs(data["text"])
+				   ))
+	connection.commit()
+	connection.close()
 
-	for row in cursor.fetchall():
-		json_data = row[0]
-		data = json.loads(json_data)
+def load_user_inputs():
+	db_path = os.path.join(os.path.dirname(__file__), "storage.db")
+	connection = sqlite3.connect(db_path)
+	cursor = connection.cursor()
 
-		print(data)
+	cursor.execute("SELECT date, config, text FROM user_inputs")
+	rows = cursor.fetchall()
 
-def delete_data():
-	if config.DELETE_DATA_BY_CLOSING == True:
-		db_path = os.path.join(os.path.dirname(__file__), "storage.db")
-		connection = sqlite3.connect(db_path)
-		cursor = connection.cursor()
-
-		cursor.execute("DROP TABLE IF EXISTS input_data")
-
-		connection.commit()
-		connection.close()
+	for row in rows:
+		date = row[0]
+		config = json.loads(row[1])
+		text = json.loads(row[2])
+		create_user_input(date, text, config=None)
+	
+	connection.close()

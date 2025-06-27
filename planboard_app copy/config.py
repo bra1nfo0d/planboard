@@ -3,7 +3,7 @@ LANGUAGE = "de"
 DEV_MODE = True
 
 # Main Window
-FULLSCREEN = False
+FULLSCREEN = True
 WINDOW_TITEL = "moetramo"
 COLUMN_BG_COLOR = "#F2EFE7"
 WEEKDAYS_BG_COLORS = ["#9ACBD0", "#9FB3DF"]

@@ -29,7 +29,7 @@ def open_creator_window(event, date):
 	creator_window.creator_window_top()
 	creator_window.run()
 
-def create_user_input(date, text_memory):
+def create_user_input(date, text_memory, config=None):
 	from .create_input import CreateInput
 	newInput = CreateInput(date, text_memory, date_frame_map)
 	newInput.build_input()

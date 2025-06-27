@@ -16,7 +16,6 @@ class CreatorWindow:
 
 		self.master_date = master_date		# date where the input will be placed
 		self.first_entrys = True			# satetment for checking if first user input
-		self.text_memory = []				# text memory of the user input
 
 	def creator_window_top(self):
 		date = tk.Label(self.mainframe,											# label wich displays the date
@@ -32,6 +31,7 @@ class CreatorWindow:
 		drop.grid(row=0, column=1, sticky="nsew")
 
 	def creator_window_bottom(self, drop_value):
+		self.text_memory = []
 		if self.first_entrys is True:											# change the bool state after opening first entrys
 			self.first_entrys = False
 		else:
