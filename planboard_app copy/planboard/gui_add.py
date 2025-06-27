@@ -46,6 +46,7 @@ class CreatorWindow:
 		
 		button = tk.Button(self.entryframe, text="Submit", command=lambda:self.submit_user_input(drop_value))
 		button.grid(row=len(config.PRESET_LABEL_HEADERS[drop_value]), column=1)
+		button.bind("<Return>", lambda e: self.submit_user_input(drop_value))
 
 	def create_entry(self, header, idx):
 		label_list = []		# local list to store the created labels, to be able to delete them

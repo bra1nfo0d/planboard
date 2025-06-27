@@ -9,9 +9,9 @@ class WhiteboardWindow:
 		self.root.title(config.WINDOW_TITEL)
 		self.root.attributes("-fullscreen", config.FULLSCREEN)
 
-		# setting for dev-mode shortcut closing
+		# key binds for dev-mode
 		if config.DEV_MODE:
-			self.root.bind("x", lambda e: close_app(e, "closed with dev shortcut <x>"))
+			self.root.bind("<x>", lambda e: close_app(e, "closed with dev shortcut <x>"))
 			self.root.bind("<c>", lambda e: clear_db_table(e))
 
 		# global list of date and frame tuple

@@ -51,3 +51,13 @@ def create_db_table():
 def clear_db_table(event):
 	from .storage import clear_user_input
 	clear_user_input()
+
+def delete_user_input(target_date, target_text):
+	from .storage import delete_user_input
+	delete_user_input(target_date, target_text)
+
+def open_edit_window(target_frame, date, text_memory):
+	from .edit_input import EditWindow
+	newEditWindow = EditWindow(target_frame, date, text_memory)
+	newEditWindow.create_edit_window()
+	newEditWindow.run()

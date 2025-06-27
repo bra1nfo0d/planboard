@@ -65,3 +65,18 @@ def clear_user_input():
 	connection.close()
 
 	print("DB has been cleared")
+
+def delete_user_input(target_date, target_text):
+	db_path = os.path.join(os.path.dirname(__file__), "storage.db")
+	connection = sqlite3.connect(db_path)
+	cursor = connection.cursor()
+
+	json_text = json.dumps(target_text)
+
+	cursor.execute("""
+				   DELETE FROM user_inputs
+				   WHERE date = ? AND text = ?
+				   """, (target_date, json_text))
+	
+	connection.commit()
+	connection.close()
