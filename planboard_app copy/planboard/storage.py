@@ -33,7 +33,7 @@ def store_user_input(data):
 				   """, (
 					   data["date"],
 					   json.dumps(data["config"]),
-					   json.dumbs(data["text"])
+					   json.dumps(data["text"])
 				   ))
 	connection.commit()
 	connection.close()

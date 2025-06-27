@@ -1,5 +1,5 @@
 import tkinter as tk
-from .core import create_user_input
+from .core import create_user_input, store_user_input
 import config
 
 # creates the input creator window
@@ -76,8 +76,9 @@ class CreatorWindow:
 		except Exception as ex:
 			print(ex)
 	
-	def submit_user_input(self, drop_value):							# submits the user input, wich get stored and
+	def submit_user_input(self, drop_value):								# submits the user input, wich get stored and
 		create_user_input(self.master_date, self.text_memory)				# showscreened on the main window
+		store_user_input({"date": self.master_date, "config": None, "text": self.text_memory})
 		self.text_memory.clear()
 		self.creator_window_bottom(drop_value)
 

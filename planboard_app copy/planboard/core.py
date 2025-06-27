@@ -9,6 +9,8 @@ def run_main_windows(weeks=2):
 	global date_frame_map
 	date_frame_map = main_window.get_date_frame_map()
 
+	load_user_inputs()
+
 	main_window.run()					#runs the main window
 
 def get_date_list(week=0):
@@ -33,3 +35,15 @@ def create_user_input(date, text_memory, config=None):
 	from .create_input import CreateInput
 	newInput = CreateInput(date, text_memory, date_frame_map)
 	newInput.build_input()
+
+def load_user_inputs():
+	from .storage import load_user_inputs
+	load_user_inputs()
+
+def store_user_input(data):
+	from .storage import store_user_input
+	store_user_input(data)
+
+def create_db_table():
+	from .storage import create_db_table
+	create_db_table()

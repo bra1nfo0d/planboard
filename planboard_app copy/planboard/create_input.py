@@ -2,7 +2,7 @@ import tkinter as tk
 import config
 
 class CreateInput:
-	def __init__(self, date, text_memory, date_frame_map, config):
+	def __init__(self, date, text_memory, date_frame_map, config=None):
 		self.master_frame = date_frame_map[date]
 		self.text_memory = text_memory
 		self.config = config

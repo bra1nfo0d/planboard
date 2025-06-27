@@ -1,7 +1,6 @@
 import tkinter as tk
 from .dates_times import get_date_str_list, get_callender_week_str
 from .core import on_enter_change_mouse, open_creator_window, close_app, get_date_list
-from .storage import delete_data
 import config
 
 class WhiteboardWindow:
@@ -12,7 +11,7 @@ class WhiteboardWindow:
 
 		# setting for dev-mode shortcut closing
 		if config.DEV_MODE:
-			self.root.bind("x", lambda e: [delete_data(), close_app(e, "closed with dev shortcut <x>")])
+			self.root.bind("x", lambda e: close_app(e, "closed with dev shortcut <x>"))
 
 		# global list of date and frame tuple
 		self.date_frame_map = {}
