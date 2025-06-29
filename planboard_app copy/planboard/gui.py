@@ -1,5 +1,5 @@
 import tkinter as tk
-from .dates_times import get_date_str_list, get_callender_week_str
+from .dates_times import get_callender_week_str, get_date_str
 from .core import on_enter_change_mouse, open_creator_window, close_app, get_date_list, clear_db_table
 import config
 
@@ -17,7 +17,9 @@ class WhiteboardWindow:
 		# global list of date and frame tuple
 		self.date_frame_map = {}
 
-	def week_layout(self, week=0):
+		self.weekdays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Sammstag", "Sonntag"]
+
+	def week_layout(self, week=0, days=5):
 		# main frame
 		frame = tk.Frame(self.root)
 		frame.pack(side="left", anchor="n", fill="both", expand=True)
@@ -29,100 +31,43 @@ class WhiteboardWindow:
 									  relief="solid", bd=1)
 			callender_week.grid(row=0, column=0, columnspan=5, sticky="nsew")
 
-		# head of the week tabel
-		monday = tk.Label(frame,
-						  text=f"Montag\n{get_date_list(week)[0]}",
-						  width=10,
-					      relief="solid", bd=1,
-						  bg=config.WEEKDAYS_BG_COLORS[(0+week)%2],
-						  font=(config.WEEKDAYS_FONT_FAMILIE,
-			   					config.WEEKDAYS_FONT_SIZE,
-								config.WEEKDAYS_FONT_STYLE))
-		monday.grid(row=1, column=0, sticky="nsew")
-		monday.bind("<Enter>", on_enter_change_mouse)
-		monday.bind("<Button-1>", lambda e: open_creator_window(e, get_date_list(week)[0]))
-		tuesday = tk.Label(frame,
-						   text=f"Dienstag\n{get_date_list(week)[1]}",
-						   width=10,
-						   relief="solid", bd=1,
-						   bg=config.WEEKDAYS_BG_COLORS[(1+week)%2],
-						   font=(config.WEEKDAYS_FONT_FAMILIE,
-			   					 config.WEEKDAYS_FONT_SIZE,
-							 	 config.WEEKDAYS_FONT_STYLE))
-		tuesday.grid(row=1, column=1, sticky="nsew")
-		tuesday.bind("<Enter>", on_enter_change_mouse)
-		tuesday.bind("<Button-1>", lambda e: open_creator_window(e, get_date_list(week)[1]))
-		wednesday= tk.Label(frame,
-							text=f"Mittwoch\n{get_date_list(week)[2]}",
-							width=10,
-							relief="solid", bd=1,
-							bg=config.WEEKDAYS_BG_COLORS[(0+week)%2],
-						    font=(config.WEEKDAYS_FONT_FAMILIE,
-			   					  config.WEEKDAYS_FONT_SIZE,
-								  config.WEEKDAYS_FONT_STYLE))
-		wednesday.grid(row=1, column=2, sticky="nsew")
-		wednesday.bind("<Enter>", on_enter_change_mouse)
-		wednesday.bind("<Button-1>", lambda e: open_creator_window(e, get_date_list(week)[2]))
-		thursday = tk.Label(frame,
-						   	text=f"Donnerstag\n{get_date_list(week)[3]}",
-							width=10,
-							relief="solid", bd=1,
-							bg=config.WEEKDAYS_BG_COLORS[(1+week)%2],
-						    font=(config.WEEKDAYS_FONT_FAMILIE,
-			   					  config.WEEKDAYS_FONT_SIZE,
-								  config.WEEKDAYS_FONT_STYLE))
-		thursday.grid(row=1, column=3, sticky="nsew")
-		thursday.bind("<Enter>", on_enter_change_mouse)
-		thursday.bind("<Button-1>", lambda e: open_creator_window(e, get_date_list(week)[3]))
-		friday = tk.Label(frame,
-						  text=f"Freitag\n{get_date_list(week)[4]}",
-						  width=10,
-						  relief="solid", bd=1,
-						  bg=config.WEEKDAYS_BG_COLORS[(0+week)%2],
-						  font=(config.WEEKDAYS_FONT_FAMILIE,
-			   					config.WEEKDAYS_FONT_SIZE,
-								config.WEEKDAYS_FONT_STYLE))
-		friday.grid(row=1, column=4, sticky="nsew")
-		friday.bind("<Enter>", on_enter_change_mouse)
-		friday.bind("<Button-1>", lambda e: open_creator_window(e, get_date_list(week)[4]))
+		for i in range(days):
+			if get_date_list(week)[0] == get_date_str(day=0):
+				label = tk.Label(frame,
+								text=f"{self.weekdays[i]}\n{get_date_list(week)[i]}",
+								width=10,
+								relief="solid", bd=1,
+								bg=config.WEEKDAY_TD_COLOR,
+								font=(config.WEEKDAYS_FONT_FAMILIE,
+									  config.WEEKDAYS_FONT_SIZE,
+									  config.WEEKDAYS_FONT_STYLE))
+				input_frame = tk.LabelFrame(frame,
+											relief="solid", bd=1,
+											bg=config.COLUMN_TD_COLOR,
+											padx=5, pady=2.5)
+			else:
+				label = tk.Label(frame,
+								text=f"{self.weekdays[i]}\n{get_date_list(week)[i]}",
+								width=10,
+								relief="solid", bd=1,
+								bg=config.WEEKDAYS_BG_COLORS[(i+week)%2],
+								font=(config.WEEKDAYS_FONT_FAMILIE,
+									  config.WEEKDAYS_FONT_SIZE,
+									  config.WEEKDAYS_FONT_STYLE))
+				input_frame = tk.LabelFrame(frame,
+											relief="solid", bd=1,
+											bg=config.COLUMN_BG_COLOR,
+											padx=5, pady=2.5)
+			label.grid(row=1, column=i, sticky="nsew")
+			label.bind("<Enter>", on_enter_change_mouse)
+			label.bind("<Button-1>", lambda e: open_creator_window(e, get_date_list(week)[i]))
+			input_frame.grid(row=2, column=i, sticky="nsew")
+			self.date_frame_map[get_date_list(week)[i]] = input_frame
 
-		# streches the week elements over the fullscreen
-		for i in range(5):
-			frame.grid_columnconfigure(i, weight=1)
-
-		# columns of the week tabel
-		monday_frame = tk.LabelFrame(frame,
-							   		 relief="solid", bd=1,
-									 bg=config.COLUMN_BG_COLOR,
-									 padx=5, pady=2.5)
-		monday_frame.grid(row=2, column=0, sticky="nsew")
-		self.date_frame_map[get_date_list(week)[0]] = monday_frame
-		tuesday_frame = tk.LabelFrame(frame,
-									  relief="solid", bd=1,
-									  bg=config.COLUMN_BG_COLOR,
-									  padx=5, pady=2.5)
-		tuesday_frame.grid(row=2, column=1, sticky="nsew")
-		self.date_frame_map[get_date_list(week)[1]] = tuesday_frame
-		wednesday_frame = tk.LabelFrame(frame,
-										relief="solid", bd=1,
-										bg=config.COLUMN_BG_COLOR,
-										padx=5, pady=2.5)
-		wednesday_frame.grid(row=2, column=2, sticky="nsew")
-		self.date_frame_map[get_date_list(week)[2]] = wednesday_frame
-		thursday_frame = tk.LabelFrame(frame,
-								 	   relief="solid", bd=1,
-									   bg=config.COLUMN_BG_COLOR,
-									   padx=5, pady=2.5)
-		thursday_frame.grid(row=2, column=3, sticky="nsew")
-		self.date_frame_map[get_date_list(week)[3]] = thursday_frame
-		friday_frame = tk.LabelFrame(frame,
-							   		 relief="solid", bd=1,
-									 bg=config.COLUMN_BG_COLOR,
-									 padx=5, pady=2.5)
-		friday_frame.grid(row=2, column=4, sticky="nsew")
-		self.date_frame_map[get_date_list(week)[4]] = friday_frame
-
+		for j in range(days):
+			frame.grid_columnconfigure(j, weight=1)
 		frame.grid_rowconfigure(2, weight=1)
+
 
 	def get_date_frame_map(self):
 		return self.date_frame_map
