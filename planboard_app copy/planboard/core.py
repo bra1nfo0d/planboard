@@ -1,10 +1,8 @@
-import tkinter
-
 def run_main_windows(weeks=2):
 	from .gui import WhiteboardWindow
 	main_window = WhiteboardWindow()	#creates the main window
 	for i in range(weeks):				#creates the weeks in the main window
-		main_window.week_layout(i)
+		main_window.week_layout(i, days=5)
 
 	global date_frame_map
 	date_frame_map = main_window.get_date_frame_map()
@@ -33,8 +31,9 @@ def open_creator_window(event, date):
 
 def create_user_input(date, text_memory, config=None):
 	from .create_input import CreateInput
-	newInput = CreateInput(date, text_memory, date_frame_map)
-	newInput.build_input()
+	if date in date_frame_map:
+		newInput = CreateInput(date, text_memory, date_frame_map)
+		newInput.build_input()
 
 def load_user_inputs():
 	from .storage import load_user_inputs
@@ -61,3 +60,6 @@ def open_edit_window(target_frame, date, text_memory):
 	newEditWindow = EditWindow(target_frame, date, text_memory)
 	newEditWindow.create_edit_window()
 	newEditWindow.run()
+
+def check_window_count():
+	pass

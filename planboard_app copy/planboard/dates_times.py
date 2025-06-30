@@ -6,7 +6,6 @@ def main():
 def get_date_str(day=0, language="de"):
 	tday = dt.date.today()
 	date = str(tday + dt.timedelta(day))
-	print(f"{date[8:]}.{date[5:7]}.{date[:4]}")
 	if language == "de":
 		return f"{date[8:]}.{date[5:7]}.{date[:4]}"
 

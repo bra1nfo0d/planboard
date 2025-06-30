@@ -29,10 +29,10 @@ class WhiteboardWindow:
 			callender_week = tk.Label(frame,
 							 		  text=get_callender_week_str(week),
 									  relief="solid", bd=1)
-			callender_week.grid(row=0, column=0, columnspan=5, sticky="nsew")
+			callender_week.grid(row=0, column=0, columnspan=days, sticky="nsew")
 
 		for i in range(days):
-			if get_date_list(week)[0] == get_date_str(day=0):
+			if get_date_list(week)[i] == get_date_str(day=0):
 				label = tk.Label(frame,
 								text=f"{self.weekdays[i]}\n{get_date_list(week)[i]}",
 								width=10,
